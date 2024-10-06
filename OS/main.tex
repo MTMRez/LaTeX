@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+\usepackage{amsmath}
+%\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc}
+
+\usepackage[portuguese]{babel}
+
+\sloppy
+
+\title{Minimizar distância percorrida por entregadores de pizza}
+
+\author{Marcos Tadeu Magalhães Rezende\inst{1}, Gabriella Mara Pereira\inst{1}, Adriano Rodrigues de Assis Vaz\inst{1}}
+
+
+\address{Pontifícia Universidade Católica de Minas Gerais}
+
+\begin{document} 
+
+\maketitle
+
+\section{Ideia}
+
+\begin{itemize}
+    \item Calcular a menor rota, considerando uma quantidade de entregadores disponíveis
+    \item Usar a API do Google para pegar a distância entre dois endereços
+    \item Input:
+    \begin{enumerate}
+        \item Número de pedidos
+        \item Localização de cada pedido 
+        \item Número de entregadores disponíveis
+    \end{enumerate}
+\end{itemize}
+
+\section{Variáveis envolvidas}
+i → endereço de origem (0,…,N)
+\\j → endereço de destino (0,…,N)
+\\Dij → distância entre o endereço de origem i e o de destino j
+\\Xijk → se o pedido do endereço i já foi entregue por um entregador k
+\\M → número de entregadores disponíveis
+\\k → entregador em questão (1,…,M)
+\\N → número total de locais dos pedidos 
+
+\section{Variáveis de decisão}
+Xijk → 1 se o entregador k está indo do endereço i ao j, 0 caso contrário
+
+\section{Objetivo}
+O objetivo a ser alcançado é de minimizar a distância a ser percorrida para que todas as entregas da pizzaria sejam realizadas.
+
+Função objetivo:
+$$
+Minimizar D = \sum_{i=0}^N \sum_{j=0}^N \sum_{k=1}^M Dij x Xijk
+$$
+
+De exemplo, vamos imaginar a seguinte condição:
+3 entregas
+2 entregadores
+
+\begin{align*}
+Min D = D01X011 + D02X021 + D03X031 
+\\ + D12X121 + D13X131 + D21X211 
+\\ + D23X231 + D31X311 + D32X321
+\\ + D01X012 + D02X022 + D03X032 
+\\ + D12X112 + D13X132  + D21X212 
+\\ + D23X232 + D31X312 + D32X322
+\end{align*}
+
+Entregador 1 → melhor caminho 0 → 1 → 2
+
+Entregador 2 → melhor caminho 0 → 3
+
+\begin{align*}
+Min D = D01x1 + 0 + 0 + D12x1 + 0 + 0 + 0 + 0 + 0
+\\ + 0 + 0 + D03x1 + 0 + 0 + 0 + 0 + 0 + 0
+\end{align*}
+
+$$
+Min D = D01 + D12 + D03
+$$
+
+\section{Restrições}
+
+Mas para isso, devemos levar em consideração algumas restrições. Primeiro que a pizzaria deve entregar todos os pedidos e cada um deve ser entregue apenas uma vez por um único entregador. Como o entregador só pode ir pra um endereço j se existe alguma rota do endereço atual i, precisamos criar uma restrição para evitar que o nosso modelo crie sub rotas. Por exemplo, o modelo poderia considerar uma rota de entrega ótima como D12 → D25, D34 → D41, sendo que é impossível ele sair do endereço 5 e ir direto para o 3 sem percorrer nenhuma distância. 
+
+Vamos também desconsiderar as diferenças de cada moto, assim como capacidade, combustível, entre outros.
+
+Por isso sujeitamos o nosso problema a:
+\begin{equation}
+\sum_{i=0}^N \sum_{k=1}^M Xijk = 1 | \forall j = 1,...,N
+\end{equation}
+\begin{equation}
+\sum_{j=0}^N \sum_{k=1}^M Xijk = 1 | \forall i = 1,...,N
+\end{equation}
+\begin{equation}
+\sum_{j=0}^N X0jk = 1 | \forall k = 1,...,M
+\end{equation}
+\begin{equation}
+\sum_{i=0}^N Xi0k = 1 | \forall k = 1,...,M
+\end{equation}
+\begin{equation}
+Xijk \in {0,1} | \forall i,j = 0,...,N, k = 1,...,M
+\end{equation}
+\begin{equation}
+Dij \geq 0 | \forall i,j = 0,...,N
+\end{equation}
+\begin{equation}
+i \in {0,...,N}
+\end{equation}
+\begin{equation}
+j \in {0,...,N}
+\end{equation}
+\begin{equation}
+i, j, k, N, M, D > 0
+\end{equation}
+As equações 1 e 2 garantem que cada endereço seja percorrido somente uma vez por um único entregador. Já as equações 3 e 4 garantem que cada entregador só pode sair da pizzaria uma vez. A equação 6 garante que a distância entre dois endereços não pode ser negativa, já a 7 e 8 garantem que o endereço a ser visitado é um dos locais de entrega da pizzaria.
+
+
+\end{document}

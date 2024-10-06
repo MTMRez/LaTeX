@@ -1,0 +1,413 @@
+\documentclass[a4paper,twoside]{article}
+
+\usepackage{epsfig}
+\usepackage{subcaption}
+\usepackage{calc}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{pslatex}
+\usepackage{apalike}
+\usepackage{algorithm2e}
+\usepackage[bottom]{footmisc}
+\usepackage{SCITEPRESS}     % Please add other packages that you may need BEFORE the SCITEPRESS.sty package.
+
+\begin{document}
+
+\title{Triadic analysis to evaluate the impact of investments in research by companies in the technology field}
+
+%\author{\authorname{Marcos T. M. Rezende\sup{1}\orcidAuthor{0000-0000-0000-0000}, Mark A.J. Song\sup{1}\orcidAuthor{0000-0001-7315-3874} and Luis E. Zárate\sup{1}\orcidAuthor{0000-0001-7063-1658}}
+%\affiliation{\sup{1}Pontifícia Universidade Católica de Minas Gerais, Departamento de Ciência da Computação, Brazil}
+%\email{mtmrezende@sga.pucminas.br, song@pucminas.br, zarate@pucminas.br}
+%}
+%\author{\authorname{Marcos T. M. Rezende\sup{1}, Mark A.J. Song\sup{1}\orcidAuthor{0000-0001-7315-3874} and Luis E. Zárate\sup{1}\orcidAuthor{0000-0001-7063-1658}}
+%\affiliation{\sup{1}Pontifícia Universidade Católica de Minas Gerais, Departamento de Ciência da Computação, Brazil}
+%\email{marcostadeumrez@gmail.com, song@pucminas.br, zarate@pucminas.br}
+}
+
+\keywords{Companies, Data Mining, Formal concept analysis, Longitudinal Database, Machine Learning, Triadic concept analysis, Triadic rules}
+
+\abstract{We know that several factors favor a company to remain active in the long term. The impact of these factors can be monitored over time, and one way to do this is through longitudinal studies. From this study, and from the database that it composes, the company can be observed through consecutive periods called waves. The application of triadic rules, based on the Formal Concept Analysis, is an approach to describe the different strategies of companies to remain active. As main results, we emphasize investments in research and development, and hiring of researchers among employees, when implemented together, contributed to increasing the chances of companies to remain active over the years of the study, reflecting their strategy in issuing patents and billing with exports.}
+
+\onecolumn \maketitle \normalsize \setcounter{footnote}{0} \vfill
+
+\section{\uppercase{Introduction}}
+\label{sec:introduction}
+
+We know that several factors favor a company to remain active in the long term, such as its organization, revenue, investments in innovation, business expansion and market influence. An analysis of the evolution of those factors is fundamental to understand the profile of those companies and evaluate to which sectors the investments should be redirected in expectations of keeping them active for the following years. To analyze the relation between those factors, the most adequate studies are the called longitudinal studies.
+% Sabemos que vários fatores favorecem uma empresa a se manter ativa a longo prazo, como sua organização, seu faturamento, o investimento em inovação, expansão do negócio e influência no mercado. Uma análise da evolução desses fatores é fundamental para entender o perfil dessas empresas e avaliar para quais setores deve-se redirecionar os investimentos na expectativa de manter a empresa ativa pelos próximos anos. Para analisar a relação desses fatores, os estudos mais adequados correspondem aos denominados estudos longitudinais.
+
+Longitudinal studies, wisely used in social areas, correspond to studies where the observations of a same sample (companies, in this paper) are registered in distinct and consecutive periods of time called waves. The longitudinal studies in business area(?) allowed to follow the evolution of companies involved in them. For instance, a longitudinal data-set can register information about the investment in technology condition in the company, how many professionals with doctor degree if compared to others, the annual revenue of the company, among other factors, for different time moments (waves, in this paper). Those sets are valorous sources to describe, analyze and validate proceedings and, above all, extract knowledge and useful information, and sometimes not obvious, to support the decision making.
+% Estudos longitudinais, amplamente utilizados na área social, correspondem aos estudos onde as observações de uma mesma amostra (empresas, neste trabalho) são registradas em períodos de tempo distintos, e consecutivos, chamados ondas. Os estudos longitudinais na área empresarial permitiriam acompanhar a evolução das empresas envolvidas no estudo. Por exemplo, uma base de dados longitudinal pode registrar informações acerca das condições de investimento em tecnologia na empresa, a quantidade de profissionais com nível de doutorado em relação a outros profissionais, o faturamento anual da empresa, entre outros fatores, para diferentes momentos temporais (ondas, neste trabalho). Essas bases, seriam uma fonte valiosa para descrever, analisar e validar procedimentos, e sobretudo para extrair conhecimentos e informação útil, e às vezes não óbvias, para apoio à tomada de decisão.
+
+To analyze the longitudinal data-sets, we suggest, in this paper, using the Formal Concept Analysis (FCA) \cite{ganter2012formal}, a section of the applied mathematics, fundamentally under the reticulated concepts theory, whose main objective is represent and extract knowledge from a data-set involving objects (companies), attributes (company features such as revenue, investments etc.) and their incidence relations. That element tuple can be represented by a dyadic formal context, from which it is possible to extract association rules among the attributes. The Triadic Concept Analysis (TCA), suggested by \cite{lehmann:95}, is an extension of the FCA theory, which uses the triadic concept analysis, which introduces a third element, a condition which determines the incidence relation between objects and attributes. In the organizational context, objects can correspond to companies, attributes to features (factors) of those companies, and conditions to different waves of the longitudinal study. From the triadic context it is possible to extract triadic association rules which can be used to observe the relations between those attributes in a wave or between waves.
+% Para analisar as bases de dados de estudos longitudinais, propomos neste trabalho, utilizar a teoria da Análise Formal de Conceitos (FCA) \cite{ganter2012formal}, um braço da matemática aplicada, fundamentada na teoria dos reticulados conceituais, cujo principal objetivo é representar e extrair conhecimento a partir de um conjunto de dados envolvendo objetos (empresas), atributos (características das empresas como faturamento, investimento, etc) e suas relações de incidência. Essa tupla de elementos pode ser representada por meio de um contexto formal diádico, a partir do qual é possível extrair regras de associação  entre os atributos. A Análise de Conceitos Triádicos (TCA), proposta por \cite{lehmann:95}, é uma extensão da teoria da FCA, a qual utiliza o contexto formal triádico, que introduz um terceiro elemento, uma condição que determina a relação de incidência entre objetos e atributos. No contexto organizacional, objetos podem corresponder a empresas, atributos as características (fatores) dessas empresas, e condições às diferentes ondas do estudo longitudinal. A partir do contexto triádico é possível extrair regras de associação triádicas que podem ser utilizadas para observar as relações entre esses atributos numa dada onda ou entre ondas. 
+
+Although in the past years, FCA has received great attention outside Data Mining, the triadic theory application is still very restrict, and completely absent in analytic longitudinal studies. And so, describing company features submitted to a longitudinal study for research investment impact analysis may be relevant to understand the effects of the actions and decision makings of the companies.
+% Embora nos últimos anos, FCA tenha recebido grande atenção na área de Mineração de Dados, a aplicação da teoria triádica tem sido ainda muito restrita, e totalmente ausente na descrição analítica de estudos longitudinais. Desta forma, descrever as características das empresas submetidos a um estudo longitudinal para análise do impacto do investimento em pesquisa, pode ser relevante para entender os efeitos das ações e tomadas de decisão das empresas.
+
+In 2019, a study in \cite{KIM2019103967} was published which registered data around 588 small and medium companies installed in 3 techno-regional innovation poles in South Korea. This study considers the company size, its acting industrial sector, the technological innovation and its survival time. The relation analysis of this data can be considered relevant for effectiveness studies in innovation area of small and medium companies. The data was annually collected between the years of 2008 to 2014 and grouped in a longitudinal data-set. The study was part of a initiative of the Korean government to create and support ecosystems em techno-regional poles. This study can be considered as a study case to show the triadic analysis applicability.
+% Em 2019, foi publicado um estudo em \cite{KIM2019103967} que registrou dados acerca de 588 pequenas e médias empresas instaladas em 3 polos tecnológicos-regionais de inovação na Coreia do Sul. Esse estudo considera o tamanho da empresa, o setor industrial no qual ela atua, a inovação tecnológica, e o tempo de sobrevivência da mesma. A análise da relação desses dados pode ser considerada relevante para estudos da efetividade da área de inovação nas pequenas e médias empresas. Os dados foram coletados anualmente entre os anos de 2008 a 2014 e agrupados numa base de dados longitudinal. O estudo foi parte de uma iniciativa do governo coreano de criação e apoio de ecossistemas em polos tecnológicos-regionais. Esse estudo ser´considerado como estudo de caso para mostar a aplicabilidade da análise triádica.
+
+This paper aims to apply the Formal Concept Analysis theory, specifically the Triadic Analysis over the data provided by the study \cite{KIM2019103967} in expectations of obtaining potential relations between the research and development investment factor of the companies and their long term survival chances.
+% A partir disso, o objetivo deste trabalho é aplicar a teoria da análise formal de conceitos, especificamente a análise triádica sobre os dados fornecidos pelo estudo longitudinal \cite{KIM2019103967} na expectativa de obter potenciais relações entre o fator investimento em pesquisa e desenvolvimento tecnológico das empresas, e das suas chances de sobrevivência a longo prazo.
+
+The following paper is divided in five sectors: In sector 2, a brief review of related works is provided. In sector 3, the theoretical fundamentals which sustains our suggestion are presented. In sector 4, the experimental methodology is described and in sector 5, the experimental results are discussed. Finally the conclusions and future works are pointed.
+% O presente artigo está dividido em cinco seções. Na seção 2, uma breve revisão de trabalhos relacionados é fornecida. Na seção 3, a fundamentação teórica que sustenta a nossa proposta é apresentada. Na seção 4, a metodologia experimental é descrita e na seção 5, os resultados experimentais são discutidos. Finalmente as conclusões e trabalhos futuros são apontados.
+
+\section{\uppercase{Related works}}
+
+Since it has been formalized, FCA has become constantly developed and employed in several applications, such as information retrieval \cite{Kumar2012}, Security Analysis \cite{Poelmans2013}, Text Mining \cite{DeMaio2014}, Topic Detection \cite{Cigarran2016}, Social Network Analysis \cite{MissaouiSergei2017}, Search Engine \cite{Negm2017}, among others \cite{Singh2011}. In general, FCA has been utilized in data analysis and knowledge representation, where associations and dependencies are identified from a binary incidence relation between objects and attributes \cite{c01,c10}. Several papers \cite{Disc1998,u07,u59,u50} also discussed the association rules extraction use through FCA.
+% Desde que foi formalizada, FCA tem sido constantemente desenvolvida e empregada em diversas aplicações, como Information Retrieval \cite{Kumar2012}, Security Analysis \cite{Poelmans2013}, Text Mining \cite{DeMaio2014}, Topic Detection \cite{Cigarran2016}, Social Network Analysis \cite{MissaouiSergei2017}, Search Engine \cite{Negm2017}, entre outras \cite{Singh2011}. Em geral, FCA tem sido utilizada em análise de dados e representação de conhecimento, onde associações e dependências são identificados a partir de uma relação binária de incidência entre objetos e atributos \cite{c01,c10}. Diversos artigos \cite{Disc1998,u07,u59,u50} também discutiram o uso da extração de regras de associação por meio da FCA.
+
+Once data-sets are often expressed by ternary relations and more commonly n-arys, a recent interest in suggest new solutions for analysis and exploration of those multidimensional data can be observed, specially in triadic contexts \cite{Bazin2020,Felde2021}. In \cite{trias01}, the authors present various strategies for discovery of optimal standards considering triadic data-sets.
+% Uma vez que os conjuntos de dados são frequentemente expressos por relações ternárias e mais geralmente $n$-árias, pode-se observar um recente interesse em propor novas soluções para análise e exploração desses dados multidimensionais, especialmente em contextos triádicos \cite{Bazin2020,Felde2021}. Em \cite{trias01}, os autores apresentaram várias estratégias para descoberta de padrões ótimos considerando conjuntos de dados triádicos.
+
+In \cite{kaio:21} the authors evaluated the TRIAS algorithm \cite{Trias}, which executes triadic analysis from high-dimensional triadic context projections, mostly in use of binary decision diagrams (BDD), a more compact canon representation for boolean formulas.
+% Em \cite{kaio:21} os autores avaliaram o algoritmo TRIAS \cite{Trias}, que executa análise triádica a partir de projeções em contextos triádicos de alta dimensionalidade, principalmente no uso de diagramas binários de decisão (BDD), uma representação canônica mais compacta para fórmulas booleanas.
+
+In studies towards companies, the traditional machine learning techniques are more common. For instance, the paper at \cite{lima:24} applied linear regression e discriminant analysis in a study with two thousand companies. The objective of the authors was to evaluate relations between ESG (Environmental, Social and Governance) factors and the financial health of companies.
+% Em estudos voltados para empresas, as técnicas tradicionais de machine learning são mais comuns. Por exemplo, o trabalho de \cite{lima:24} aplicou regressão linear e análise discriminante num estudo com cerca de 2 mil empresas. O objetivo dos autores foi avaliar as relações entre fatores ESG (Environmental, Social and Governance) e a saúde financeira das empresas.
+
+In \cite{falqueto:22}, it was suggested an approach based on clusterization to segment e-commerce customers and evaluate financial potential of those groups. The paper \cite{campos:21} shows the application of some classic machine learning algorithms, such as decision tree, linear regression and SVM in farmaceutical industry. \cite{vidal:20} makes an effectiveness comparison between multi-criteria decision making methods and machine learning in different cases for supplies management.
+% Em \cite{falqueto:22}, foi proposta uma abordagem baseada em clusterização para segmentar clientes de e-commerce e avaliar o potencial financeiro desses grupos. O trabalho \cite{campos:21} apresenta algumas aplicações de algoritmos clássicos do machine learning, como árvore de decisão, regressão linear e SVM na industria farmacêutica. Já \cite{vidal:20} faz uma comparação de eficiência entre métodos de tomada de decisão multi-critério e machine learning em diferentes casos para gestão de estoques.
+
+By the previously exposed, and considering the most of our understanding, it was not possible to find Formal Concept Analysis contributions, specially of Triadic Analysis towards longitudinal studies in organizational environments. This way we intend in contributing with triadic analysis to sustain decision systems in company management.
+% Pelo exposto anteriormente, e considerando o maior de nosso entendimento, não foi possível encontrar contribuições da Análise Formal de Conceitos, especialmente da Análise Triádica voltada para estudos longitudinais em ambientes organizacionais. Desta forma pretendemos contribuir com a análise triádica para sustentar sistemas decisórios na gestão das empresas.
+
+\section{\uppercase{Theoretical Fundamentals}}
+
+Longitudinal studies consist in analyzing observations of a same object sample made through consecutive time periods called waves. These observations are stored in data-sets called longitudinal.
+% Estudos longitudinais consistem em análise de observações de uma mesma amostra de objetos realizadas em períodos de tempo consecutivos denominados ondas. Estas observações são armazenadas em bases de dados chamadas longitudinal.
+
+The analysis of this data-set type generates information from which association rules with predictive capacity or just descriptive tasks according to the qunatity of entries in the data-set can be concluded. Those association rules are obtained through the Formal Concept Analysis (FCA) \cite{wille:95}, a branch of the applied mathematics based on hierarchization of formal concept, from an object set and their properties, seeking to represent and extract knowledge from it. Its extension, the Triadic Concept Analysis (TCA) \cite{lehmann:95}, extracts association/implication rules with conditions based on object property variations through the waves.
+% A análise deste tipo de base de dados gera informação sobre a qual pode-se concluir regras de associação com capacidade preditiva ou apenas tarefas descritivas conforme a quantidade de registros presentes na base. Essas regras de associação são obtidas a partir da análise formal de conceitos (AFC) \cite{wille:95}, um ramo da matemática aplicada baseado na hierarquização do conceito formal, a partir de um conjunto de objetos e suas propriedades, visando representar e extrair conhecimento a partir da mesma. A sua extensão, a análise de conceitos triádicos (ACT) \cite{lehmann:95}, procura extrair regras de associação/implicação com condições baseado nas variações das propriedades dos objetos ao longo das ondas.
+
+The main definitions of FCA are the formal context, in which an incidence relation $I$ between an object set $G$ and their attribute set $M$ is identified, defined by $(I\subseteq{G \times M})$, and the formal concept $(A,B)$, in which it is extracted two subsets $A$ and $B$, named extension and intention, derived respectively from $G$ and $M$, in which each element of a subset has all elements from the other, described by $(A \subseteq{G} \ and \ B \subseteq{M} \iff A' = B \ and \ B' = A)$.
+% As principais definições da FCA são o contexto formal, na qual se identifica uma relação de incidência $I$ entre um conjunto de objetos $G$ e seu conjunto de atributos $M$, definida por $(I\subseteq{G \times M})$, e o conceito formal $(A,B)$, na qual extrai-se dois sub-conjuntos $A$ e $B$, denominados extensão e intenção, derivados respectivamente de $G$ e $M$, na qual cada elemento de um sub-conjunto possui todos os elementos do outro, descrito por $(A \subseteq{G} \ e \ B \subseteq{M} \iff A' = B \ e \ B' = A)$.
+
+The triadic concept analysis, though, suggested by \cite{lehmann:95}, is a tridimensional approach of the formal concept analysis, whose formal context establishes a ternary relation $I$ among three sets $K1$, $K2$ and $K3$, described by the quadruple $(K1, K2, K3, I)$. In other words, $I \subseteq K1 \times K2 \times K3$, in which the elements of $K1$, $K2$, e $K3$ are called objects, attributes and conditions, respectively. This relation can be represented by $(g,m,b) \in I$, and is read as: "the object $g$ has the attribute $m$ under the condition $b$". An example of triadic context is shown at Table \ref{Tabela:1}, where the companies are considered as objects, each wave as a condition, and the investment types as the attributes. This way, it is possible to register the companies, their investment actions and its revenue for each wave, or between waves for analysis of investment effectiveness.
+% Já a teoria da análise conceitual triádica, proposta por \cite{lehmann:95}, é uma abordagem tridimensional da análise formal de conceitos, cujo contexto formal estabelece uma relação ternária $I$ entre três conjuntos $K1$, $K2$ e $K3$, descrito pela quádrupla $(K1, K2, K3, I)$. Em outras palavras, $I \subseteq K1 \times K2 \times K3$, onde os elementos de $K1$, $K2$, e $K3$ são chamados objetos, atributos e condições, respectivamente. Esta relação pode ser representada por $(g,m,b) \in I$, e pode ser lido como: “o objeto $g$ possui o atributo $m$ sob a condição $b$”. Um exemplo do contexto triádico é mostrado na Tabela \ref{Tabela:1}, onde podemos considerar as empresas como os objetos, cada onda como uma condição, e os tipos de investimentos como os atributos. Assim, é possível registrar as empresas, suas ações de investimento, e seu faturamento para cada onda, ou entre ondas para análise da efetividade do investimento.
+
+
+\begin{table}[h!] 
+\scriptsize
+\begin{center}
+\caption{Triadic context example} \label{Tabela:1}
+\begin{tabular}{c|cc|cc|cc} \hline
+&\multicolumn{2}{c|}{\textbf{Wave1}}&\multicolumn{2}{c|}{\textbf{Wave2}}&\multicolumn{2}{c}{\textbf{Wave3}}
+\\ Company &Attr1&Attr2&Attr1&Attr2&Attr1&Attr2\\
+\hline
+1   & X &  
+    &   & X
+    &   & X \\
+2   & X &  
+    & X & X
+    &   &   \\
+3   &   & X 
+    & X & X
+    & X &   \\
+    \hline
+\end{tabular}
+\end{center}
+\end{table}
+\vspace{-4mm}
+
+In TCA, a triadic formal context can be transformed in a dyadic formal context with restrictions, where an incidence between object (company) and attribute (financial contribution, research investment etc.), in a specific condition (wave in longitudinal study), cannot be exclusionary for other features in a same wave. The Table \ref{Tabela:1b} presents the triadic formal concept transformation for the dyadic formal context.
+% Em ACT, um contexto formal triádico pode ser transformado num contexto formal diádico com restrições, onde uma incidência entre objeto (Empresa), atributo (Aporte Financeiro, Investimento Pesquisa, etc), numa condição específica (onda no estudo longitudinal) não pode ser excludente para outras características para a mesma onda. A Tabela \ref{Tabela:1b} apresenta a transformação do contexto formal triádico, mostrado na Tabela \ref{Tabela:1}, para o contexto formal diádico.
+
+\begin{table}[h!] 
+\small
+\scriptsize
+\begin{center}
+\caption{Example of transformation from triadic formal context to dyadic formal context} \label{Tabela:1b}
+\begin{tabular}{c|cc|cc|cc} 
+\hline
+%&\multicolumn{2}{c}{\textbf{Wave1}}&\multicolumn{2}{c}{\textbf{Wave2}}&\multicolumn{2}{c}{\textbf{Wave3}}
+%\\
+C &A1-W1&A2-W1&A1-W2&A2-W2&A1-W3&A2-W3\\
+\hline
+1   & X &  
+    &   & X
+    &   & X \\
+2   & X &  
+    & X & X
+    &   &   \\
+3   &   & X 
+    & X & X
+    & X &   \\
+    \hline
+\end{tabular}
+\end{center}
+\caption*{C=Company; A=Attrbiute; W=Wave}
+\end{table}
+
+From the quadruple $(K1, K2, K3, I)$, it is extractable two types of triadic association rules suggested by \cite{biedermann:97}: Biedermann Conditional Attribute Association Rule (BCAAR) e Biedermann Attributional Condition Association Rule (BACAR).
+% Da quádrupla $(K1, K2, K3, I)$ , pode-se extrair dois tipos de regra de associação triádicas propostas por \cite{biedermann:97}: Biedermann Conditional Attribute Association Rule (BCAAR) e Biedermann Attributional Condition Association Rule (BACAR).
+
+The BCAAR rule, represented by ($R$→$S$)$C$ (sup, conf), corresponds to the subset of objects containing all attributes in $R$ and also containing all attributes in $S$ under the condition (wave) $C$, with a support (sup) and a confidence (conf). The BACAR rule, represented by ($P$→$Q$)$N$ (sup, conf), corresponds to the subset of objects, under the conditions in $P$, which are also under the conditions in $Q$ in the attribute subset $N$, with a support (sup) and a confidence (conf).
+% A regra BCAAR, representada por: ($R$→$S$)$C$ (sup, conf), corresponde ao sub-conjunto de objetos possuindo todos os atributos em $R$, possuem também todos os atributos em $S$ sob a condição (onda) $C$, com um suporte (sup) e uma confiança (conf). Já a regra BACAR, representada por: ($P$→$Q$)$N$ (sup, conf), corresponde ao sub-conjunto de objetos, sob as condições em $P$, também estará sob as condições em $Q$ no sub-conjunto de atributos $N$, com um suporte (sup) e uma confiança (conf).
+
+\begin{itemize}
+    \item \textbf{Support}: The support metric corresponds to the proportion of objects in the subset $g \in G$ which satisfy the implication \textit{$P \rightarrow Q$}, to the total number of objects $\mid G\mid$ of the formal context $\mathcal{K}$, where $(.)'$ corresponds to the derived operator defined in the Equation \ref{support}.
+    % \item \textbf{Support}: A métrica de suporte corresponde à proporção de objetos no subconjunto $g \in G$ que satisfazem a implicação \textit{$P \rightarrow Q$}, em relação ao número total de objetos $\mid G\mid$ do contexto formal $\mathcal{K}$, onde $(.)'$ corresponde ao operador de derivação definido na Equação \ref{OpB}.
+ 
+\begin{equation}
+\label{support}
+Support(P \to Q) = \frac{ \mid (P \cup \{Q\})' \mid }{\mid G \mid}
+\end{equation}
+\end{itemize}
+
+
+\begin{itemize}
+    \item \textbf{Confidence}: The confidence metric corresponds to the proportion of objects $g \in G$ which contain $P$, and also contain $Q$, to the total number of objects $\mid G\mid$.
+    % \item \textbf{Confiance}: A métrica de confiança corresponde à proporção dos objetos $g \in G$ que contêm $P$, e também contêm $Q$, em relação ao número total de objetos $\mid G\mid$.
+
+\begin{equation}
+\label{confidence}
+Confiance(P \to Q) = \frac{\mid(P \cup \{Q\})' \mid}{ \mid P' \mid}
+\end{equation}
+\end{itemize}
+
+\section{\uppercase{Experiment Methodology}}
+
+The used data-set in this case study (\cite{KIM2019103967}) collected the following attributes from the companies through 7 years for the longitudinal study:
+% A base de dados utilizada como estudo de caso (\cite{KIM2019103967}) coletou dados ao longo de 7 anos para 588 pequenas e médias empresas instaladas em três polos tecnológicos-regionais de inovação na Coreia do Sul. As informações coletadas das empresas para o estudo longitudinal são listadas a seguir:
+
+\begin{itemize}
+    \item Number of Employees;
+    \item Total Revenue;
+    \item General Research and Development Investment;
+    \item Internal Research and Development Investment;
+    \item Number of Employees Assigned to Research;
+    \item Patent Applications;
+    \item Venture Certification Emission;
+    \item Export Sales;
+    \item Sector Concentration Ratio;
+    \item Sector Growth Ratio.
+%     \item Número de empregados;
+%     \item Faturamento total;
+%     \item Investimento em Pesquisa e Desenvolvimento Geral;
+%     \item Investimento em Pesquisa e Desenvolvimento Interno;
+%     \item Número de profissionais envolvidos em pesquisa;
+%     \item Emissão de patentes;
+%     \item Emissão de certificado de risco;
+%     \item Faturamento com exportações;
+%     \item Taxa de concentração do setor;
+%     \item Taxa de crescimento do setor.
+\end{itemize}
+
+To analyze the effect of the actions taken by the companies, in relation to its revenue, it was consented to consider medium term actions (considering the first three years), and its effect in long term (considering the four following years). This way it was defined two new waves for the analysis of the longitudinal study.
+% Para analisar o efeito das ações tomadas pelas empresas, em relação a seu faturamento, foi decidido considerar ações de médio prazo (levando em consideração os três primeiros anos), e seu efeito a longo prazo (considerando os quatro anos seguintes). Desta forma foram definidos duas novas ondas para análise do estudo longitudinal.
+
+While preparing the data-set, for each wave, it was calculated the percentage of Internal Research and Development Investment to the Total Revenue (Investment), the percentage of the number of researchers to the total number of employees (Research), the total quantity of patent applications and whether there were or not Export Sales (ExpSales), as shown below:
+% Durante a preparação da base de dados, para cada onda, foram calculadas a porcentagem de investimentos em pesquisa e desenvolvimento interno em relação ao Faturamento total (Invest.), a porcentagem do número de pesquisadores em relação ao número total de empregados (Num-Pesq.), a quantidade total de patentes emitidas, e se houve ou não faturamento com exportações (Fat-Export.), como mostrado a seguir:
+
+\begin{itemize}
+    \item Internal Research and Development Investment to the Total Revenue (Investment);
+    \item Number of researchers/number of employees, (Research);
+    \item Experience with patent applications, (Patents);
+    \item Experience with export sales, (ExpSales);
+\end{itemize}
+% \begin{itemize}
+%     \item Investimentos em Pesquisa e Desenvolvimento Interno/Total de faturamento, (Invest);
+%     \item Pessoal de pesquisa/Número de empregados, (Num-Pesq);
+%     \item Experiência com Emissão de patentes, (Patentes);
+%     \item Experiência de Faturamento com exportações, (Fat-Export);
+% \end{itemize}
+
+Since it is necessary the representation of the new longitudinal data-set into the triadic formal context through the binary incidence \{0,1\}, it was necessary to apply a threshold for each considered attribute. For such, it was established thresholds based on mean, median and third quartile of the attributes Investment, Research, Patents and ExpSales for the 530 companies (90,1\% of overall) which kept themselves active through all the data collecting period, see Table \ref{tabela:1}. For the favorable conditions to productivity increase in the companies the incidence value \{1\} was assigned, \{0\} otherwise. Boolean values 1 and 0, respectively, represent when an achieved result by the company is greater or equal to the established threshold or not.
+% Desde que é necessária a representação do novo conjunto de dados longitudinal dentro do contexto formal triádico, por meio da incidência binária \{0,1\}, foi necessário aplicar um threshold (para cada variável considerada). Para isto, foram estabelecidas thresholds baseadas na média, mediana e terceiro quartil das variáveis Invest, Num-Pesq, Patentes, e Fat-Export para as 530 empresas (90,1\% do total) que se mantiveram ativas durante todo o período da coleta de dados, ver Tabela \ref{tabela:1}. Para as condições favoráveis ao aumento da produtividade nas empresas foi atribuído valor de incidência \{1\}, caso contrário o valor \{0\}. Valores booleanos de 1 e 0 representam, respectivamente, quando o resultado alcançado pela empresa é maior ou igual ao valor estabelecido pelo threshold, ou não.
+
+For this study, the threshold based on median values for the attributes showed the best results.
+% Para este estudo, o threshold que usa como limiares os valores de mediana para as variáveis apresentou os melhores resultados.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{||c c||} 
+         \hline
+         Variável & Threshold \\ [0.5ex] 
+         \hline\hline
+         Invest. & 2,5\% \\
+         Num.Pesq. & 5,1\% \\
+         Patentes & 1 \\
+         Fat.Export. & 1 \\ [1ex] 
+         \hline
+    \end{tabular}
+    \caption{Median values for the calculated attributes in pre-processing in relation to active companies}
+    % \caption{Valores das medianas para as variáveis calculadas no pré-processamento em relação às empresas ativas}
+    \label{tabela:1}
+\end{table}
+
+The pre-processed data-set was used to generate a file in format JSON, which is used in the tool application Lattice Miner 2.0 (\cite{missaoui2017lattice}). This tool generates formal concepts and triadic association rules from binary relations between objects and attributes. This file used by the application contains:
+% O conjunto de dados pré-processado foi usado para gerar um arquivo no formato JSON que é utilizado na aplicação da ferramenta Lattice Miner 2.0 (\cite{missaoui2017lattice}). Esta ferramenta gera conceitos formais e regras de associação triádicas a partir de relações binárias entre objetos e atributos. Este arquivo a ser utilizado pela aplicação contêm:
+
+\begin{itemize}
+    \item The list of objects and attributes of the data-set;
+    \item The list of conditions, which are the periods in which the objects were observed, such as before (three first years of the study) and after (four last years of the study);
+    \item Minimum desired support (optional);
+    \item The incidence relations, which are the conditions which present correspondence in relation to the threshold parameter for each attribute.
+\end{itemize}
+% \begin{itemize}
+%     \item As listas de objetos e atributos do conjunto de dados considerado;
+%     \item A lista de condições, ou seja, os períodos em que os objetos foram observados, como antes (3 primeiras ondas do estudo), e após (4 últimas ondas do estudo);
+%     \item Mínimo de suporte desejado (opcional);
+%     \item As relações de incidência, ou seja, as condições que apresentam correspondência em relação ao parâmetro do threshold para cada atributo.
+% \end{itemize}
+
+After receiving the JSON file, the tool generates a context table, based on the received data, to generate triadic association rules BCAARs or BACARs with a support and confidence level.
+% Após receber o arquivo JSON, a ferramenta gera uma tabela de contexto, baseado nos dados recebidos, para gerar regras de associação triádicas BCAARs ou BACARs com nível de suporte e/ou confiança.
+
+Due to the great amount of generated rules, to be effective in the triadic analysis, it is necessary to define interest scopes. For this paper the following scopes were defined: a) Relation between same attribute and different waves, to understand the action continuity and the achieved results before and after actions taken by the companies and b) Relation between different attributes and same wave, to analyze the relation of actions taken by the companies. From those scopes the following scenarios for analysis were defined:
+% Devido à grande quantidade de regras geradas, para ser efetivo na análise triádica, é necessário definir escopos de interesse. Para este trabalho definimos os seguintes escopos: a) Relação de uma mesma variável em diferentes ondas, de forma a entender a continuidade de ações, e dos resultados alcançados antes e após ações tomadas pelas empresas; e b) Relação de diferentes variáveis numa mesma onda. De forma a analisar a relação das ações adotadas pelas empresas. A partir desses escopos foram definidos os seguintes cenários para análise.
+
+\begin{itemize}
+    \item Scenario 1: Relation between percentage of researchers to the number of employees and the waves;
+    \item Scenario 2: Relation among multiple attributes collected in the first wave;
+    \item Scenario 3: Relation among multiple attributes collected in the second wave;
+    \item Scenario 4: Relation among multiple attributes collected in the first and second waves;
+\end{itemize}
+% \begin{itemize}
+%     \item Cenário 1: Relação entre porcentagem de pesquisadores em relação ao número de empregados entre as ondas;
+%     \item Cenário 2: Relação entre múltiplas variáveis coletados na primeira onda;
+%     \item Cenário 3: Relação entre múltiplas variáveis coletados na segunda onda;
+%     \item Cenário 4: Relação entre múltiplas variáveis coletados na primeira e segunda ondas;
+% \end{itemize}
+
+For each of these scenarios, there is a association rule set with specific levels of support and confidence.
+% Para cada um destes cenários, tem-se um conjunto de regras de associação com um nível de suporte e confiança específicos.
+
+\section{\uppercase{Result Analysis}}
+
+For a better analysis of the suggested scenarios, the rules with the highest confidence values were considered. For support it was considered that both higher and lower values can point interesting generalizations and exceptions respectively. These last ones might indicate success cases among the analyzed companies.
+% Para uma melhor análise dos cenários propostos, foram consideradas as regras com os maiores valores para a medida da confiança. Para o suporte consideramos que tanto valores maiores como menores podem apontar interessantes generalizações e exceções respectivamente. Estas últimas podem indicar casos de sucesso entre as empresas analisadas.
+
+8 BACAR rules with 25.7\% to 39.3\% of support and 62.9\% to 86.5\% of confidence were yielded. A summary with the most relevant analyzed rules is described below:
+% Foram produzidas 8 regras BACAR com 25.7\% a 39.3\% de suporte e 62.9\% a 86.5\% de confiança. Um resumo com as regras mais relevantes analisadas é descrito a seguir:
+
+\begin{itemize}
+    \item R1: $( 1st \to 2nd )$ ExpSales [support = 37.1\% confidence = 86.5\%]
+    \item R2: $( 1st \to 2nd )$ Patents [support = 25.7\% confidence = 65.4\%]
+    \item R3: $( 1st \to 2nd )$ Research [support = 39.3\% confidence = 73.8\%]
+    \item R4: $( 1st \to 2nd )$ Investment [support = 38.9\% confidence = 79.8\%]
+\end{itemize}
+% \begin{itemize}
+%     \item Regra 1: ( 1ª -> 2ª ) Fat-Export. [support = 37.1\% confidence = 86.5\%]
+%     \item Regra 2: ( 1ª -> 2ª ) Patentes [support = 25.7\% confidence = 65.4\%]
+%     \item Regra 3: ( 1ª -> 2ª ) Num-Pesq. [support = 39.3\% confidence = 73.8\%]
+%     \item Regra 4: ( 1ª -> 2ª ) Invest. [support = 38.9\% confidence = 79.8\%]
+% \end{itemize}
+
+Reiterating that 90\% of the companies approached in this study stayed active through all the analyzed period, it was observed through the BACAR analysis that of all the analyzed companies by the longitudinal study, around a third of them kept continuous investments, researchers among the employees, applied patents and had export sales through the two considered waves -before for the first three years and later for the four last years of the original study, corresponding to 7 years. At first these rules allow to describe the timing behavior of the companies through both waves.
+% Reiterando que 90\% das empresas abordadas neste estudo se mantiveram ativas durante todo o período analisado, observou-se, por meio da análise BACAR, que as empresas analisadas pelo estudo longitudinal, aproximadamente 1/3 delas mantêm contínuo investimento, pesquisadores no grupo de funcionários, tiveram patentes, e tiveram faturamento com exportações durante as duas ondas consideradas (antes para os 3 anos iniciais, e depois, para os 4 anos seguintes do estudo longitudinal original, correspondente a 7 anos). A princípio estas regras permitem descrever o comportamento temporal das empresas durante ambas as ondas.
+
+For instance, the Rule R4: \textit{$( 1st \to 2nd )$ Investment [support = 38.9\% confidence = 79.8\%]} expresses that 38.9\%  of the companies which invested up to 2.5\% of its sales in research and development (threshold obtained from the median value of the attribute) in the first three years of the study also did so in the four following years (second wave). The Rule R3: \textit{$( 1st \to 2nd )$ Research [support = 39.3\% confidence = 73.8\%]} indicates that 39.3\% of the companies with researchers among its employees in the first 3 years kept that scenario in the 4 following years. This may indicate a long term survival strategy of the study companies.
+% Por exemplo, a Regra 4: \textit{( 1ª -> 2ª ) Invest. [support = 38.9\% confidence = 79.8\%]} expressa que 38.9\% das empresas que investiram a partir de 2.5\% de seus faturamentos em pesquisa e desenvolvimento (threshold obtido a partir do valor da mediana da variável) nos três primeiros anos do estudo também o fizeram nos quatro anos seguintes (segunda onda). A Regra 3: \textit{( 1ª -> 2ª ) Num-Pesq. [support = 39.3\% confidence = 73.8\%]}, indica que 39.3\% das empresas que possuiam empregados pesquisadores nos 3 primeiros anos, mantiveram esse cenário nos 4 anos seguintes. Isso pode mostrar uma estratégia para a sobrevivência a longo prazo das empresas em estudo. 
+
+On the other hand, the Rule R2: \textit{$( 1st \to 2nd )$ Patents [support = 25.7\% confidence = 65.4\%]} and Rule R1: \textit{$( 1st \to 2nd )$ ExpSales [support = 37.1\% confidence = 86.5\%]} present a tendency on companies which stayed active through all the study period have reflected their best results with Export Sales than with Patent Applications.
+% Já as Regra 2: \textit{( 1ª -> 2ª ) Patentes [support = 25.7\% confidence = 65.4\%]} e Regra 1: \textit{( 1ª -> 2ª ) Fat.Export. [support = 37.1\% confidence = 86.5\%]} apresentam uma tendência a empresas que se mantiveram ativas durante todo o período do estudo terem refletido seus melhores resultados com <Faturamento com exportações> que com <Emissão de patentes>.
+
+Also 56 BCAAR rules with 15\% to 42.9\% of support and 60.2\% to 90.7\% of confidence were yielded. The most relevant analyzed ones in this paper are described as follows:
+% Também foram produzidas 56 regras BCAAR com 15\% a 42.9\% de suporte e 60.2\% a 90.7\% de confiança. As mais relevantes analisadas neste trabalho são descritas a seguir:
+
+\begin{itemize}
+    \item R1: $( Investment \to ExpSales )$ 2nd [support = 31.0\% confidence = 64.1\%]
+    \item R2: $( Investment \to Patents )$ 2nd [support = 29.1\% confidence = 60.2\%]
+    \item R3: $( Investment \to Research )$ 2nd [support = 38.4\% confidence = 79.6\%]
+    \item R4: $( Research \to ExpSales )$ 1st [support = 29.9\% confidence = 56.2\%]
+    \item R5: $( Research \to Patents )$ 1st [support = 30.1\% confidence = 56.5\%]
+    \item R6: $( Research \to Investment )$ 1st [support = 42.9\% confidence = 80.5\%]
+    \item R7: $( Investment \to ExpSales )$ 1st [support = 28.9\% confidence = 59.2\%]
+    \item R8: $( Investment \to Patents )$ 1st [support = 29.6\% confidence = 60.6\%]
+    \item R9: $( Investment \to Research )$ 1st [support = 42.9\% confidence = 87.8\%]
+    \item R10: $( Research \to Patents )$ 2nd [support = 26.7\% confidence = 58.4\%]
+    \item R11: $( Research \to Investment )$ 2nd [support = 38.4\% confidence = 84.0\%]
+    \item R12: $( Research \to ExpSales )$ 2nd [support = 26.9\% confidence = 58.7\%]
+    \item R13: $( Investment+Research \to Patents )$ 2nd [support = 23.1\% confidence = 60.2\%]
+    \item R14: $( Investment+Research \to ExpSales )$ 2nd [support = 23.8\% confidence = 61.9\%]
+    \item R15: $( Investment+Research \to ExpSales )$ 1st [support = 25.3\% confidence = 59.1\%]
+    \item R16: $( Investment+Research \to Patents )$ 1st [support = 26.4\% confidence = 61.5\%]
+    \item R17: $( ExpSales+Investment+Research \to Patents )$ 1st [support = 18.7\% confidence = 73.8\%]
+    \item R18: $( ExpSales+Investment+Research \to Patents )$ 2nd [support = 15.0\% confidence = 62.9\%]
+    \item R19: $( Investment+Patents+Research \to ExpSales )$ 2nd [support = 15.0\% confidence = 64.7\%]
+    \item R20: $( Investment+Patents+Research \to ExpSales )$ 1st [support = 18.7\% confidence = 71.0\%]
+\end{itemize}
+% \begin{itemize}
+%     \item R1: ( Invest. -> Fat.Export. ) 2ª [support = 31.0\% confidence = 64.1\%]
+%     \item R2: ( Invest. -> Patentes ) 2ª [support = 29.1\% confidence = 60.2\%]
+%     \item R3: ( Invest. -> Num.Pesq. ) 2ª [support = 38.4\% confidence = 79.6\%]
+%     \item R4: ( Num.Pesq. -> Fat.Export. ) 1ª [support = 29.9\% confidence = 56.2\%]
+%     \item R5: ( Num.Pesq. -> Patentes ) 1ª [support = 30.1\% confidence = 56.5\%]
+%     \item R6: ( Num.Pesq. -> Invest. ) 1ª [support = 42.9\% confidence = 80.5\%]
+%     \item R7: ( Invest. -> Fat.Export. ) 1ª [support = 28.9\% confidence = 59.2\%]
+%     \item R8: ( Invest. -> Patentes ) 1ª [support = 29.6\% confidence = 60.6\%]
+%     \item R9: ( Invest. -> Num.Pesq. ) 1ª [support = 42.9\% confidence = 87.8\%]
+%     \item R10: ( Num.Pesq. -> Patentes ) 2ª [support = 26.7\% confidence = 58.4\%]
+%     \item R11: ( Num.Pesq. -> Invest. ) 2ª [support = 38.4\% confidence = 84.0\%]
+%     \item R12: ( Num.Pesq. -> Fat.Export. ) 2ª [support = 26.9\% confidence = 58.7\%]
+%     \item R13: ( Invest.+Num.Pesq. -> Patentes ) 2ª [support = 23.1\% confidence = 60.2\%]
+%     \item R14: ( Invest.+Num.Pesq. -> Fat.Export. ) 2ª [support = 23.8\% confidence = 61.9\%]
+%     \item R15: ( Invest.+Num.Pesq. -> Fat.Export. ) 1ª [support = 25.3\% confidence = 59.1\%]
+%     \item R16: ( Invest.+Num.Pesq. -> Patentes ) 1ª [support = 26.4\% confidence = 61.5\%]
+%     \item R17: ( Fat.Export.+Invest.+Num.Pesq. -> Patentes ) 1ª [support = 18.7\% confidence = 73.8\%]
+%     \item R18: ( Fat.Export.+Invest.+Num.Pesq. -> Patentes ) 2ª [support = 15.0\% confidence = 62.9\%]
+%     \item R19: ( Invest.+Patentes+Num.Pesq. -> Fat.Export. ) 2ª [support = 15.0\% confidence = 64.7\%]
+%     \item R20: ( Invest.+Patentes+Num.Pesq. -> Fat.Export. ) 1ª [support = 18.7\% confidence = 71.0\%]
+% \end{itemize}
+
+Those relations better describe the consequences of the profile presented by the BACAR rules, fundamental to conclude how the attributes combination influences the chances of a company had stayed active through all the analyzed period.
+% Essas relaçoes descrevem melhor as consequências do perfil apresentado pelas regras BACAR, fundamental para se concluir como a combinação das variáveis influencia nas chances de uma empresa ter se mantido ativa durante todo o período analisado.
+
+It is consented that patent application and export sales are consequences of a good commercial performance of the company. So only BCAAR rules establishing relations between investment and research and development dedicated personnel in a determined wave are emphasized in this analysis.
+% Entende-se que emissão de patentes e o faturamento com exportações são consequências de um bom desempenho comercial da empresa. Por isso, apenas regras BCAAR que estabelecem relações entre investimento e pessoal dedicado em pesquisa e desenvolvimento numa determinada onda são enfatizadas nesta análise.
+
+For instance, the Rule R9: \textit{( Investment -> Research ) 1st [support = 42.9\% confidence = 87.8\%]} shows that 43\% of the companies which invested up to 2.5\% of its sales in research and development in the first three years of the study also had more than 5\% of its employees assigned to research in this same period. Both thresholds were obtained from the median values of the attributes. The confidence of 88\% presented by the rule shows a good relation of an investment incentive other.
+% A título de exemplo, a Regra R9: \textit{( Invest. -> Num.Pesq. ) 1ª [support = 42.9\% confidence = 87.8\%]} mostra que 43\% das empresas que investiram a partir de 2.5\% de seu faturamento em pesquisa e desenvolvimento nos primeiros três anos do estudo também possuíam pesquisadores acima de 5\% de seus empregados, nesse mesmo período. Ambos os thresholds foram obtidos a partir do valor da mediana das variáveis. A confiança de 88\% apresentada pela regra mostra boa relação de um investimento incentivar outro.
+
+The high confidence for the rules R3, R6, R9 and R11, which combine research and development investment with employees assigned to research shows there is a consent, in this context, that making one of these investments implies in also making the other.
+% A alta confiança para regras R3, R6, R9 e R11, que combinam investimento em pesquisa e desenvolvimento com número de empregados dedicados a pesquisa, mostram que há um consenso, neste contexto, de que realizar um destes investimentos implica em também realizar o outro.
+
+On the other hand, observing the support and confidence of rules R1, R2, R4, R5, R7, R8, R10 and R12, which combine the investment attribute with an outcome attribute, it is notable that research and development investment showed better outcome in export sales, while dedicating employees to research did so with patent applications, despite less companies fitting into this last scenario.
+% Já ao observar o suporte e a confiança das regras R1, R2, R4, R5, R7, R8, R10 e R12, que combinam uma variável de investimento com uma variável de retorno, é notável que investimento em pesquisa e desenvolvimento mostrou melhor retorno em faturamento com exportações, enquanto dedicar funcionários a pesquisa o fez também com a emissão de patentes, mesmo com menos empresas se encaixando neste último cenário.
+
+It is also observed a tendency of decline in support for rules R15 and R16 to R13 and R14, which combine both investment attributes with one of outcome from first to second waves, reflecting the 10\% of companies approached in this study which became inactive sometime in the analyzed period. However, the confidence stability of these same rules reflect a potential maintenance in the commercial strategies of the companies through the 7 years of the study.
+% Observa-se ainda uma tendência de queda no suporte das regras R15 e R16 para as R13 e R14, que combinam ambas as variáveis de investimento com uma de retorno da primeira para a segunda ondas, refletindo os 10\% das empresas abordadas neste estudo que se tornaram inativas em algum momento do período analisado. No entanto, a estabilidade da confiança destas mesmas regras reflete uma potencial manutenção nas estratégias comerciais das empresas ao longo dos 7 anos do estudo.
+
+Also, the rules R17, R18, R19 and R20, despite the low support, present meaningful confidence above 60\%. For instance, in the rules R17 and R18, the very few companies which presented research and development investment, researchers among the employees and made export sales also made patent applications, but with a small shrink in number of patent applications between the waves.
+% Além disso, as regras R17, R18, R19, R20, apesar do baixo suporte, apresentam confiança significativa a partir de 60\%. Por exemplo, nas regras R17, R18, as poucas empresas que tiveram investimento em pesquisa/desenvolvimento, possuem pesquisadores, e tiveram faturamento com exportação tiveram também emissão de patentes, porém com pequena diminuição no número de patentes entre as ondas.
+
+And so, it can be observed that, in this context, research and development investments and presence of researches among the employees, when implanted together, contributed to favor the chances of the companies staying active through the 7 years of the study, reflecting their activity in patent applications and export sales.
+% Assim, pode-se observar que, neste contexto, investimentos em pesquisa e desenvolvimento e uma presença de pesquisadores entre os empregados, quando implantados em conjunto, contribuíram para favorecer as chances das empresas analisadas se manterem ativas ao longo dos 7 anos do estudo, refletindo sua atividade em emissão de patentes e faturamento com exportações.
+
+\section{\uppercase{Conclusions}}
+\label{sec:conclusion}
+
+In this paper, the research and development investments with the financial outcomes of technology companies were analyzed. Data aiming for relations among research investments, number of researchers in the company, patent applications and export sales was considered. The analysis allows to evaluate the company chances of staying active for long periods analyzing the research investment effectiveness in it.
+% Neste trabalho, foram analisadas as ações de investimentos em pesquisa e desenvolvimento com os retornos financeiros de empresas de tecnologia. Foram consideradas informações procurando obter relações entre Investimentos em pesquisa, Números de pesquisadores na empresa, Emissão de patentes, e Faturamento com exportações. A Análise permite avaliar as chances de uma empresa se manter ativa durante período longos analisando a efetividade do investimento em pesquisa da empresa.
+
+It was demonstrated that the triadic analysis is promising in describing longitudinal data-sets. The use of tools such as Lattice Miner combined with a proper preparation of the data to be analyzed, its thresholds and concise conclusions about the obtained results showed potential for studies in different areas.
+% Foi demostrado que a análise triádica é promissora na descrição de bases de dados longitudinais. O uso de ferramentas como o Lattice Miner combinado com uma preparação propícia das variáveis a serem analisadas, seus limiares e conclusões concisas acerca dos resultados obtidos, apresentam potencial para estudos em diversas áreas.
+
+It is expected that the presented results incentive the expansion of triadic analysis application to beyond data to be considered in companies management.
+% Espera-se que os resultados apresentados incentivem a expansão das aplicações da análise triádica para que possam produzir informação a serem consideradas na gestão das empresas.
+
+\section*{\uppercase{Acknowledgements}}
+
+%The authors would like to thank: The National Council for Scientific and Technological Development of Brazil (CNPQ), The Coordination for the Improvement of Higher Education Personnel - Brazil (CAPES) (Grant PROAP 88887.842889/2023-00 – PUC/MG, Grant PDPG 88887.708960/2022-00 – PUC/MG - INFORMATICA and Finance Code 001), Minas Gerais State Research Support Foundation (FAPEMIG) under grant number APQ-01929-22, and the Pontifical Catholic University of Minas Gerais, Brazil.
+
+
+\bibliographystyle{apalike}
+{\small
+\bibliography{kdmileb}}
+
+
+% \section*{\uppercase{Appendix}}
+
+% If any, the appendix should appear directly after the
+% references without numbering, and not on a new page. To do so please use the following command:
+% \textit{$\backslash$section*\{APPENDIX\}}
+
+\end{document}
+

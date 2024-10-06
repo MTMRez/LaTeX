@@ -1,0 +1,323 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+
+%\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} %//Package to write '<' e '>'. Alternatively, "\textless" and "\textgreater" do not require this pack
+
+%\usepackage{indentfirst} %//Package to indent first paragrafh in section just like the follwoing ones.
+\usepackage{amsmath}
+
+%//Aparentemente, o modelo SBC só escreve as referências bibliográficas na bibliografia do LaTeX compilado se elas forem mencionadas em algum lugar do documento usando \cite{}.
+%//comentários de possível deleção não iniciam com "//".
+
+\sloppy
+
+\providecommand{\keywords}[1]
+{
+  Palavras-chave: #1
+}
+
+\title{Análise triádica de evolução de pequenas e médias empresas}
+
+\author{Marcos T. M. Rezende\inst{1}, Luis E. Z. Galvez\inst{1}}
+
+\address{Instituto de Ciências Exatas e Informática -- Pontifícia Universidade Católica de Minas \\Gerais (PUC Minas)\\
+  Caixa Postal 1.686 -- 30535.901 -- Belo Horizonte -- MG -- Brazil
+  \email{mtmrezende@sga.pucminas.br, zarate@pucminas.br}
+}
+
+\begin{document} 
+
+\maketitle
+
+\begin{resumo} 
+  Sabemos que vários fatores favorecem uma empresa a se manter ativa a longo prazo. O impacto destes fatores pode ser monitorado ao longo do tempo, e uma maneira de fazer isso é através de estudos longitudinais. A partir deste estudo, e da base de dados que o compõe, a empresa pode ser observada através de períodos de tempo consecutivos chamados ondas. A aplicação de regras triádicas, baseadas na Análise Formal de Conceitos, é uma abordagem para descrever as diferentes estratégias das empresas para se manterem ativas. Como resultados principais, enfatizamos que investimentos em pesquisa e desenvolvimento, e contratação de pesquisadores entre empregados, quando implementados em conjunto, contribuíram para aumentar as chances das empresas se manterem ativas ao longo dos anos do estudo, refletindo sua estratégia em emissão de patentes e faturamento com exportações.
+\end{resumo}
+
+%//resumo no idioma corrente vem primeiro
+
+\begin{abstract}
+    We know that several factors favor a company to remain active in the long term. The impact of these factors can be monitored over time, and one way to do this is through longitudinal studies. From this study, and from the database that it composes, the company can be observed through consecutive periods of time called waves. The application of triadic rules, based on the Formal Concept Analysis, is an approach to describe the different strategies of companies to remain active. As main results, we emphasize investments in research and development, and hiring of researchers among employees, when implemented together, contributed to increasing the chances of companies to remain active over the years of the study, reflecting their strategy in issuing patents and billing with exports.
+\end{abstract}
+
+\keywords{Análise de conceitos triádicos, Análise formal de conceitos, Atividade a longo prazo, Base de dados longitudinal, Big Data, Data Mining, Empresas, Lattice Miner, Machine Learning, Regras triádicas}
+
+\section{Introdução}
+
+Sabemos que vários fatores favorecem uma empresa a se manter ativa a longo prazo, como sua organização, faturamento, investimento em inovação, expansão do negócio e influência no mercado. Uma análise da evolução desses fatores é fundamental para entender o perfil dessas empresas, e para quais setores deve-se redirecionar os investimentos, na expectativa de manter a empresa ativa pelos próximos anos.
+
+Em 2019, foi publicado um estudo em \cite{KIM2019103967} que colheu dados acerca de 588 pequenas e médias empresas instaladas em 3 polos tecnológicos-regionais de inovação na Coreia do Sul. Esse estudo está relacionado com o tempo de sobrevivência, inovação tecnológica, de acordo com o tamanho da empresa e setor industrial na qual está inserida. Estes dados são considerados relevantes por estudos na área de inovação de pequenas e médias empresas serem raros. Os dados foram coletados anualmente entre os anos de 2008 a 2014 e agrupados numa base de dados longitudinal. O estudo foi parte de uma iniciativa do governo coreano de criação e apoio de ecossistemas em polos tecnológicos-regionais.
+
+Para analisar as bases de dados de estudos longitudinais, propomos, neste trabalho, utilizar a teoria da Análise Formal de Conceitos (FCA) \cite{ganter2012formal}, um braço da matemática aplicada, fundamentada na teoria dos reticulados conceituais, cujo principal objetivo é representar e extrair conhecimento a partir de um conjunto de dados envolvendo objetos (empresas), atributos (características das empresas como faturamento, investimento, etc) e suas relações de incidência. Essa tupla de elementos pode ser representada por meio de um contexto formal diádico, a partir do qual é possível extrair regras de associação  entre os atributos. A Análise de Conceitos Triádicos (TCA), proposta por \cite{lehmann:95}, é uma extensão da teoria da FCA, a qual utiliza o contexto formal triádico, que introduz um terceiro elemento, uma condição que determina a relação de incidência entre objetos e atributos. No contexto organizacional, objetos podem corresponder a empresas, atributos a características dessas empresas, e condições às diferentes ondas do estudo longitudinal. A partir do contexto triádico é possível extrair regras de associação triádicas que podem ser utilizadas para observar as relações entre atributos (características das empresas) numa dada onda ou entre ondas. 
+
+Embora nos últimos anos, FCA tenha recebido grande atenção na área de Mineração de Dados, a aplicação da teoria triádica tem sido ainda muito restrita, e totalmente ausente na descrição analítica de estudos longitudinais. Desta forma, descrever as características das empresas submetidos a um estudo longitudinal para análise do impacto do investimento em pesquisa, pode ser relevante para entender os efeitos das ações das empresas.
+
+A partir disso, o objetivo deste trabalho é aplicar a teoria da análise formal de conceitos sobre os dados fornecidos por este estudo longitudinal, de \cite{KIM2019103967}, na expectativa de obter potenciais relações entre a quantidade de investimento em pesquisa e desenvolvimento tecnológico das empresas, e das suas chances de sobrevivência a longo prazo.
+
+A seguir, serão apresentados as referências teóricas na qual este trabalho é fundamentado, quais ferramentas serão utilizadas, como serão utilizadas e quais resultados pretende-se obter, além da apresentação dos resultados e como eles podem ser aproveitados em trabalhos futuros.
+
+\section{Trabalhos relacionados} \label{sec:firstpage}
+
+A análise formal de conceitos triádicos é mais comumente aplicada na área da saúde, onde estudos longitudinais, formato ideal para trabalhar nesse campo de estudos, são mais promissores. Em \cite{mendes:21}, a AFC triádica foi utilizada para descrever as relações entre os sintomas apresentados ao longo de um tratamento da doença de Parkinson. Em \cite{noronha:21}, a análise triádica foi utilizada num estudo para identificar a evolução de condições que favorecem os perfis de longevidade baseado num estudo britânico sobre envelhecimento. Há também o trabalho de \cite{ferreira:21}, que analisou os efeitos do uso de olanzapina em um grupo de pacientes em tratamento quimioterápico para câncer de mama.
+
+%No entanto, há aplicações da análise formal de conceitos em outras áreas, como a própria computação.Em \cite{dias:11}, é proposto o arcabouço EF-Concept Analysis, uma ferramenta para auxiliar no desenvolvimento e avaliação de algoritmos para análise formal de conceitos.
+
+%No trabalho proposto em \cite{dias:21}, apresenta-se a metodologia FCANN, baseada na análise formal de conceitos, usada para extração de conhecimento de processos treinados por redes neurais artificiais.
+
+Em \cite{kaio:21} os autores avaliaram o algoritmo TRIAS, que executa análise triádica a partir de projeções, em contextos triádicos de alta dimensionalidade, principalmente na construção de diagramas binários de decisão (BDD), representação canônica mais compacta para fórmulas booleanas.
+
+Em estudos de empresas, as ferramentas tradicionais de machine learning são mais comuns, especialmente pela raridade de bases de dados longitudinais nessa área. O trabalho de \cite{lima:24} utilizou regressão linear e análise discriminante num estudo com cerca de 2 mil empresas para avaliar as relações entre variáveis ESG e a saúde financeira das empresas.
+
+Em \cite{falqueto:22}, é proposta uma abordagem baseado em clusterização para segmentar clientes de e-commerce conforme determinado critério, e são apresentados os resultados para uma rede que usa como critério de segmentação média de valores das compras na plataforma.
+
+\cite{campos:21} apresenta algumas aplicações de algoritmos clássicos do machine learning, como árvore de decisão, regressão linear e SVM na área farmacêutica. Já \cite{vidal:20} faz uma comparação de eficiência entre métodos de tomada de decisão multi-critério e machine learning em diferentes casos de gestão de estoques.
+
+Pelo exposto anteriormente, e considerando o maior de nosso esforço, não foi possível encontrar contribuições da Análise Formal de Conceitos, especialmente da Análise Triádica voltada para estudos longitudinais em ambientes organizacionais. Desta forma pretendemos contribuir na aplicabilidade da matemática computacional em problemas de gestão de empresas.
+
+\subsection{Fundamentação teórica}
+
+Estudos longitudinais consistem em análise de observações de uma mesma amostra de objetos realizadas em períodos de tempo consecutivos denominados ondas. Estas observações são organizadas num formato de base de dados chamado longitudinal.
+
+A análise deste formato de base de dados gera informação sobre a qual pode-se concluir regras de associação com capacidade preditiva ou apenas tarefas descritivas conforme a quantidade de registros presentes na base.
+
+Estas regras de associação são obtidas a partir da análise formal de conceitos (AFC) \cite{wille:95}, um ramo da matemática aplicada baseado na hierarquização de conceitos a partir de um conjunto de objetos e suas propriedades visando representar e extrair conhecimento a partir da mesma. A sua extensão, a análise de conceitos triádicos (ACT) \cite{lehmann:95}, procura extrair regras de associação/implicação com condições baseado nas variações das propriedades dos objetos ao longo das ondas.
+
+Suas principais definições são o contexto formal, na qual se identifica uma relação de incidência I entre um conjunto de objetos G e seu conjunto de atributos M, descrita por $(I\subseteq{G \times M})$, e o conceito formal, na qual extrai-se dois sub-conjuntos A e B, denominados extensão e intenção, derivados respectivamente de G e M, na qual cada elemento de um sub-conjunto possui todos os elementos do outro, descrito por $(A \subseteq{G} \ e \ B \subseteq{M} \iff A' = B \ e \ B' = A)$.
+
+Já a teoria da análise conceitual triádica, proposta por \cite{lehmann:95}, é uma abordagem tridimensional da análise formal de conceitos, cujo contexto formal estabelece uma relação ternária $I$ entre três conjuntos K1, K2 e K3, descrito pela quádrupla (K1, K2, K3, I). Em outras palavras, $I \subseteq K1 \times K2 \times K3$, onde os elementos de $K1$, $K2$, e $K3$ são chamados objetos, atributos e condições, respectivamente. Esta relação pode ser representada por $(g,m,b) \in I$, e pode ser lido como: “o objeto $g$ possui o atributo $m$ sob a condição $b$”. Um exemplo do contexto triádico é mostrado na Tabela \ref{Tabela:1}, onde podemos considerar os pacientes como os objetos, cada onda como uma condição, e os sintomas como os atributos. Assim, é possível registrar os pacientes, com seus sintomas/observações clínicas para cada onda de estudo.
+
+
+\begin{table}[h!] 
+\scriptsize
+\begin{center}
+\caption{Exemplo de contexto triádico} \label{Tabela:1}
+\begin{tabular}{c|cc|cc|cc} \hline
+&\multicolumn{2}{c|}{\textbf{Onda1}}&\multicolumn{2}{c|}{\textbf{Onda2}}&\multicolumn{2}{c}{\textbf{Onda3}}
+\\ Empresa &Caract1&Caract2&Carcat1&Caract2&Caract1&Caract2\\
+\hline
+1   & X &  
+    &   & X
+    &   & X \\
+2   & X &  
+    & X & X
+    &   &   \\
+3   &   & X 
+    & X & X
+    & X &   \\
+    \hline
+\end{tabular}
+\end{center}
+\end{table}
+%\vspace{-4mm}
+
+Em ACT, um contexto formal triádico pode ser transformado num contexto formal diádico com restrições, onde uma incidência entre objeto (Empresa), atributo (Aporte Financeiro, Investimento Pesquisa, etc), numa condição específica (onda no estudo longitudinal) não pode ser excludente para outras características para a mesma onda. A Tabela \ref{Tabela:1b} apresenta a transformação do contexto formal triádico, mostrado na Tabela \ref{Tabela:1}, para o contexto formal diádico.
+
+\begin{table}[h!] 
+\scriptsize
+\begin{center}
+\caption{Exemplo de transformação do contexto formal triádico para o contexto formal diádico} \label{Tabela:1b}
+\begin{tabular}{c|cc|cc|cc} 
+\hline
+%&\multicolumn{2}{c}{\textbf{Wave1}}&\multicolumn{2}{c}{\textbf{Wave2}}&\multicolumn{2}{c}{\textbf{Wave3}}
+%\\
+Paciente &Sintoma1-W1&Sintoma2-W1&Sintoma1-W2&Sintoma2-W2&Sintoma1-W3&Sintoma2-W3\\
+\hline
+1   & X &  
+    &   & X
+    &   & X \\
+2   & X &  
+    & X & X
+    &   &   \\
+3   &   & X 
+    & X & X
+    & X &   \\
+    \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Da quádrupla (K1, K2, K3, I) , pode-se extrair dois tipos de regra de associação triádicas propostas por \cite{biedermann:97}: Biedermann Conditional Attribute Association Rule (BCAAR) e Biedermann Attributional Condition Association Rule (BACAR).
+
+A regra BCAAR, representada por: (R→S) C (sup., conf.), corresponde a cada objeto possuindo todos os atributos em R, possui também todos os atributos em S sob uma condição (onda) C, com um suporte (sup.) e uma confiança (conf.). Já a regra BACAR, representada por: (P→Q) N (sup., conf.), corresponde a cada objeto sob as condições em P também estará sob as condições em Q no atributo N, com um suporte (sup.) e uma confiança (conf.).
+
+O suporte corresponde à proporção de objetos no subconjunto que satisfaz a implicação P→Q, em relação ao número total de objetos do contexto formal. Já a confiança corresponde à razão dos objetos deste subconjunto que contêm um atributo P e que também contêm outro atributo Q, em relação ao número total de objetos.
+
+\section{Metodologia}
+
+Como a base de dados utilizada neste estudo (\cite{KIM2019103967}) coletou dados ao longo de 7 anos, de 2008 a 2014, para uma melhor análise, os três primeiros anos foram sintetizados em uma onda e os quatro anos seguintes em outra. As variáveis coletados das empresas foram:
+
+\begin{itemize}
+    \item Número de empregados;
+    \item Total de faturamento;
+    \item Investimento em Pesquisa e Desenvolvimento Geral;
+    \item Investimento em Pesquisa e Desenvolvimento Interno;
+    \item Pessoal de pesquisa;
+    \item Emissão de patentes;
+    \item Emissão de certificado de risco;
+    \item Faturamento com exportações;
+    \item Taxa de concentração do setor;
+    \item Taxa de crescimento do setor.
+\end{itemize}
+
+% Durante a preparação da base de dados, para cada onda, foram calculadas a porcentagem de investimentos em pesquisa e desenvolvimento interno em relação ao total de vendas (Invest.), a porcentagem do número de pesquisadores em relação ao total de empregados (Num.Pesq.), a quantidade total de patentes emitidas e se houve faturamento com exportações (Fat.Export.).
+
+Durante a preparação da base de dados, para cada onda, foram consideradas as seguintes combinações de variáveis:
+
+\begin{itemize}
+    \item Investimento em Pesquisa e Desenvolvimento Interno dividido pelo Total de faturamento (Invest.);
+    \item Pessoal de pesquisa dividido pelo Número de empregados (Num.Pesq.);
+    \item Experiência com Emissão de patentes (Patentes);
+    \item Experiência com Faturamento com exportações (Fat.Export.);
+\end{itemize}
+
+Desde que é necessária a representação de contextos formais triádicos, por meio da incidência binária \{0,1\} é necessário aplicar um threshold para as condições favoráveis ao aumento da produtividade nas empresas. Para isto, foram estabelecidas thresholds baseadas na média, mediana e terceiro quartil dos valores acima calculados para as 530 empresas (90,1\% do total) que se mantiveram ativas durante todo o período da coleta de dados, apresentada na Tabela \ref{tabela:1}. Valores booleanos de 1 e 0 representam, respectivamente, quando um valor obtido é maior ou igual ao estabelecido pelo threshold ou não. 
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{||c c||} 
+         \hline
+         Variável & Threshold \\ [0.5ex] 
+         \hline\hline
+         Invest. & 2,5\% \\
+         Num.Pesq. & 5,1\% \\
+         Patentes & 1 \\
+         Fat.Export. & 1 \\ [1ex] 
+         \hline
+    \end{tabular}
+    \caption{Valores das medianas para as variáveis calculadas no pré-processamento em relação às empresas ativas}
+    \label{tabela:1}
+\end{table}
+
+A base de dados pré-processada foi usada para gerar um arquivo no formato JSON que será utilizado na aplicação Lattice Miner 2.0 (\cite{missaoui2017lattice}), uma ferramenta de data mining que gera conceitos formais e regras de associação a partir de relações binárias entre objetos e propriedades.
+
+Este arquivo a ser utilizado pela aplicação contêm:
+\begin{itemize}
+    \item As listas de objetos e atributos da base;
+    \item A lista de condições, ou seja, os períodos em que os objetos foram observados, como antes e após um evento ou uma quantidade de dias;
+    \item Mínimo de suporte (opcional);
+    \item As relações obtidas baseadas nos dados lidos da base de dados pré-processada, ou seja, as condições que apresentam correspondência em relação ao parâmetro do threshold para cada atributo.
+\end{itemize}
+
+Após receber o arquivo JSON, a aplicação gera uma tabela de contexto baseado nos dados lidos e oferece algumas funções que o usam como referência para gerar regras de associação baseadas em nível de suporte e/ou confiança, implicações triádicas, BCAARs ou BACARs.
+
+%\subsection{Resultados esperados}
+
+A análise triádica pode trabalhar com variados cenários agrupados, neste trabalho, em dois grupos de critérios:
+
+\begin{itemize}
+    \item Grupo 1: Relação de um mesmo atributo em diferentes ondas;
+    \item Grupo 2: Relação de diferentes atributos numa mesma onda.
+\end{itemize}
+
+Para cada um destes cenários, tem-se um conjunto de regras de associação com um nível de suporte e confiança calculados conforme critérios explicados na subseção 2.1. Alguns exemplos de cenários são:
+
+\begin{itemize}
+    \item Cenário 1: Relação entre porcentagem de pesquisadores em relação ao número de empregados entre as ondas;
+    \item Cenário 2: Relação entre múltiplas variáveis coletados na primeira onda;
+    \item Cenário 3: Relação entre múltiplas variáveis coletados na segunda onda;
+    \item Cenário 4: Relação entre múltiplas variáveis coletados na primeira e segunda ondas;
+\end{itemize}
+
+As regras BACAR descrevem o perfil das empresas envolvidas no estudo longitudinal analisado, enquanto as regras BCAAR descrevem as implicações, como de <Maior investimento em pesquisa> (antecedente) para <aumento da produtividade> (consequente), oriundas desse perfil.
+
+\section{Resultados obtidos}
+
+Para uma melhor análise dos cenários propostos, foram considerados os melhores valores de suporte e confiança para as regras geradas. No estudo, o threshold que usa como limiares os valores de mediana para as variáveis apresentou os melhores resultados.
+
+Foram produzidas 8 regras BACAR com 25,7\% a 39,3\% de suporte e 62,9\% a 86,5\% de confiança. Um resumo com as regras mais relevantes analisadas está descrito a seguir:
+
+\begin{itemize}
+    \item Regra 1: ( 1ª -> 2ª ) Fat.Export. [support = 37.1\% confidence = 86.5\%]
+    %\item 2: ( b -> a ) Fat.Export. [support = 37.1\% confidence = 78.1\%]
+    %\item 3: ( b -> a ) Invest. [support = 38.9\% confidence = 80.6\%]
+    \item Regra 2: ( 1ª -> 2ª ) Patentes [support = 25.7\% confidence = 65.4\%]
+    %\item 5: ( b -> a ) Patentes [support = 25.7\% confidence = 62.9\%]
+    \item Regra 3: ( 1ª -> 2ª ) Num.Pesq. [support = 39.3\% confidence = 73.8\%]
+    \item Regra 4: ( 1ª -> 2ª ) Invest. [support = 38.9\% confidence = 79.8\%]
+    %\item 8: ( b -> a ) Num.Pesq. [support = 39.3\% confidence = 85.9\%]
+\end{itemize}
+
+Reiterando que 90\% das empresas abordadas neste estudo se mantiveram ativas durante todo o período analisado, observou-se, por meio da análise BACAR, que o perfil das empresas registradas pelo estudo longitudinal é diverso, uma vez que as regras descrevem as implicações de um mesmo atributo em diferentes ondas, sem necessariamente associá-los. A princípio estas regras permitem descrever o comportamento temporal das empresas durante ambas as ondas.
+
+%//se o perfil fosse concentrado, o suporte seria maior.
+
+Lembrando que o estudo longitudinal envolveu 8 anos, dos quais os 3 primeiros anos foram agrupadas para definir uma onda, e os 4 anos restantes para representar a segunda onda. A Regra 4: \textit{( 1ª -> 2ª ) Invest. [support = 38.9\% confidence = 79.8\%]} nos diz que 39\% das empresas que investiram a partir de 2,5\% de seus faturamentos em pesquisa e desenvolvimento, threshold obtido a partir do valor da mediana da variável, nos três primeiros anos do estudo também o fizeram nos quatro anos seguintes (segunda onda).
+
+%Para confirmar que o <investimento em pesquisa e desenvolvimento>, neste contexto, aumentou as chances da empresa se manter ativa durante todos os 7 anos do estudo, 
+Esta regra, quando analisada em conjunto com a Regra 3: \textit{( 1ª -> 2ª ) Num.Pesq. [support = 39.3\% confidence = 73.8\%]}, apresenta uma maior confiança, o que indica que investimento em pesquisa e desenvolvimento se mostrou mais eficiente que dedicar empregados a pesquisa para garantir a sobrevivência a longo prazo das empresas do estudo.
+
+Já as Regra 2: \textit{( 1ª -> 2ª ) Patentes [support = 25.7\% confidence = 65.4\%]} e Regra 1: \textit{( 1ª -> 2ª ) Fat.Export. [support = 37.1\% confidence = 86.5\%]} apresentam uma tendência a empresas que se mantiveram ativas durante todo o período do estudo terem refletido seus melhores resultados com <Faturamento com exportações> que com <Emissão de patentes>.
+
+Também foram produzidas 56 regras BCAAR com 15\% a 42,9\% de suporte e 60,2\% a 90,7\% de confiança. As mais relevantes analisadas neste trabalho estão descritas a seguir:
+
+%//"itemize" localizado em "discard.txt" entra aqui
+
+\begin{table}[h!] 
+\scriptsize
+\begin{center}
+\caption{Regras BCAAR obtidas} \label{Tabela:2b}
+\begin{tabular}{c|cc|cc} 
+\hline
+%&\multicolumn{2}{c}{\textbf{Wave1}}&\multicolumn{2}{c}{\textbf{Wave2}}&\multicolumn{2}{c}{\textbf{Wave3}}
+%\\
+Regra & Implicação & Onda & Suporte & Confiança\\
+\hline
+R1 & Invest. -> Fat.Export & 2ª & 31\% & 64.1\% \\
+R2 & Invest. -> Patentes & 2ª & 29.1\% & 60.2\% \\
+R3 & Invest. -> Num.Pesq. & 2ª & 38.4\% & 79.6\% \\
+R4 & Num.Pesq. -> Fat.Export. & 1ª & 29.9\% & 56.2\% \\
+R5 & Num.Pesq. -> Patentes & 1ª & 30.1\% & 56.5\% \\
+R6 & Num.Pesq. -> Invest. & 1ª & 42.9\% & 80.5\% \\
+R7 & Invest. -> Fat.Export. & 1ª & 28.9\% & 59.2\% \\
+R8 & Invest. -> Patentes & 1ª & 29.6\% & 60.6\% \\
+R9 & Invest. -> Num.Pesq. & 1ª & 42.9\% & 87.8\% \\
+R10 & Num.Pesq. -> Patentes & 2ª & 26,7\% & 58.4\% \\
+R11 & Num.Pesq. -> Invest. & 2ª & 38.4\% & 84\% \\
+R12 & Num.Pesq. -> Fat.Export. & 2ª & 26.9\% & 58.7\% \\
+R13 & Invest.+Num.Pesq. -> Patentes & 2ª & 23.1\% & 60.2\% \\
+R14 & Invest.+Num.Pesq. -> Fat.Export. & 2ª & 23.8\% & 61.9\% \\
+R15 & Invest.+Num.Pesq. -> Fat.Export. & 1ª & 25.3\% & 59.1\% \\
+R16 & Invest.+Num.Pesq. -> Patentes & 1ª & 26.4\% & 61.5\% \\
+R17 & Fat.Export.+Invest.+Num.Pesq. -> Patentes & 1ª & 18.7\% & 73.8\% \\
+R18 & Fat.Export.+Invest.+Num.Pesq. -> Patentes & 2ª & 15\% & 62.9\% \\
+R19 & Invest.+Patentes+Num.Pesq. -> Fat.Export. & 2ª & 15\% & 64.7\% \\
+R20 & Invest.+Patentes+Num.Pesq. -> Fat.Export. & 1ª & 18.7\% & 71\% \\
+    \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Estas relações descrevem melhor as consequências do perfil apresentado pelas regras BACAR, fundamental para se concluir como a combinação das variáveis influencia nas chances de uma empresa do estudo ter se mantido ativa durante todo o período analisado.
+
+Entende-se que emissão de patentes e faturamento com exportações são consequências de um bom desempenho comercial da empresa. Por isso, apenas regras BCAAR que estabelecem relações entre investimento e pessoal dedicado em pesquisa e desenvolvimento e diferentes variáveis para uma determinada onda são analisadas neste trabalho.
+
+A título de exemplo, a Regra R9: \textit{( Invest. -> Num.Pesq. ) 1ª [support = 42.9\% confidence = 87.8\%]} mostra que 43\% das empresas que investiram a partir de 2,5\% de seu faturamento em pesquisa e desenvolvimento nos primeiros três anos do estudo também dedicaram como pesquisadores a partir de 5\% de seus empregados nesse mesmo período. Ambos os thresholds foram obtidos a partir do valor da mediana das variáveis. A confiança de 88\% apresentada pela regra mostra boa propensão de um investimento incentivar outro.
+
+A alta confiança para regras R3, R6, R9 e R11, que combinam investimento em pesquisa e desenvolvimento com número de empregados dedicados a pesquisa, mostram que há um consenso, neste contexto, de que realizar um destes investimentos implica em também realizar o outro.
+
+Já ao observar o suporte e a confiança das regras R1, R2, R4, R5, R7, R8, R10 e R12, que combinam uma variável de investimento com uma variável de retorno, é notável que investimento em pesquisa e desenvolvimento mostrou melhor retorno em faturamento com exportações, enquanto dedicar funcionários a pesquisa o fez tanto neste quanto com emissão de patentes, mesmo com menos empresas se encaixando neste último cenário.
+
+Observa-se ainda uma tendência de queda no suporte das regras R15 e R16 para as R13 e R14, que combinam ambas as variáveis de investimento com uma de retorno da primeira para a segunda ondas, refletindo os 10\% das empresas abordadas neste estudo que se tornaram inativas em algum momento do período analisado. No entanto, a estabilidade da confiança destas mesmas regras reflete uma potencial manutenção nas estratégias comerciais das empresas ao longo dos 7 anos do estudo.
+
+Além disso, as regras R17, R18, R19, R20, apesar do baixíssimo suporte, apresentam confiança a partir de 60\%, o que mostra que as poucas empresas que apresentaram uma variável de retorno a partir de ambas as variáveis de investimento também apresentou a outra variável de retorno nas duas ondas.
+
+Assim, pode-se observar que, neste contexto, investimentos em pesquisa e desenvolvimento e uma presença de pesquisadores entre os empregados, quando implantados em conjunto, contribuíram para favorecer as chances das empresas analisadas se manterem ativas ao longo dos 7 anos do estudo, refletindo sua atividade em emissão de patentes e faturamento com exportações.
+
+\section{Conclusão}
+
+Neste trabalho, foram analisados os dados de 588 empresas de 3 regiões de inovação na Coreia do Sul. Foram obtidas variáveis baseadas no estudo que coletou os dados e procurou-se obter relações entre estas variáveis e as chances de uma empresa deste estudo ter se mantido ativa durante todo o período de 7 anos de observações, entre 2008 a 2014.
+
+A análise triádica, quando combinada com uma interpretação concisa dos resultados, é muito promissora na descrição de bases de dados longitudinais. O uso de ferramentas próprias como o Lattice Miner combinado com uma preparação propícia das variáveis a serem analisadas, seus limiares e conclusões concisas acerca dos resultados obtidos apresentam potencial para estudos em diversas áreas.
+
+Deve-se ressaltar que o contexto estudado é muito restrito por não considerar contexto econômico do período da coleta de dados nem diferenças entre os setores das empresas estudadas. Entretanto, ao levar esses fatores em consideração, é possível estender esse modelo de estudo para outras regiões do mundo e outros períodos de tempo com diferentes contextos históricos.
+
+Espera-se também que os resultados apresentados incentivem a expansão das aplicações da análise triádica para outras áreas além da saúde e informática que também possam produzir informação a serem consideradas na gestão das empresas.
+
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}

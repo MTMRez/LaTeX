@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Template de Artigo Adaptado para Trabalho de Diplomação do ICEI %%%%%%%%%%%%%%%%%%%%%%%%
+%% codificação UTF-8 - Abntex - Latex -  							     %%
+%% Autor:    Fábio Leandro Rodrigues Cordeiro  (fabioleandro@pucminas.br)                            %% 
+%% Co-autores: Prof. João Paulo Domingos Silva, Harison da Silva e Anderson Carvalho		     %%
+%% Revisores normas NBR (Padrão PUC Minas): Helenice Rego Cunha e Prof. Theldo Cruz                  %%
+%% Versão: 1.1     18 de dezembro 2015                                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\newpage
+
+
+\section{\esp Descrição do Problema}
+A densidade da mama é comprovadamente relacionada com o risco do desenvolvimento de câncer, uma vez que mulheres com uma maior densidade mamária podem esconder lesões, levando o câncer a ser detectado tardiamente. A escala de densidade chamada BIRADS foi desenvolvida pelo American College of Radiology e informa os radiologistas sobre a diminuição da sensibilidade do exame com o aumento da densidade da mama. BI-RADS definem a densidade como sendo quase inteiramente composta por gordura (densidade I), por tecido fibro glandular difuso (densidade II), por tecido denso heterogêneo (III) e por tecido extremamente denso (IV). A mamografia é a principal ferramenta de rastreio do câncer e radiologistas avaliaram a densidade da mama com base na análise visual das imagens.
+
+O objetivo deste trabalho é propor uma implementação de aplicativo que leia imagens de exames mamográficos e possibilite o reconhecimento automático da densidade da mama, utilizando técnicas de descrição por textura.
+
+\section{\esp Técnicas implementadas}
+
+O aplicativo considera a existência no mesmo diretório corrente de uma pasta denominada "imagens" cujo conteúdo consiste em pastas com numerais inteiros como nomes contendo as imagens a serem utilizadas no treinamento.
+
+A técnica de descrição por textura utilizada nesta proposta é a proposta por Haralick et al. (1973) baseada na junção de probabilidades de pares de pixels em matrizes de co-ocorrência de níveis de cinza (GLCM).
+
+Na linguagem de programação Python, tem-se a biblioteca mahotas, com função capaz de extrair descritores de Haralick até distância especificada pelos parâmetros funcionais ou 1, 2, 4, 8, 16 por padrão, e em 4 direções, correspondentes aos ângulos 0, 45, 90 e 135.
+
+O reconhecimento da densidade da mama é feito pelo aplicativo usando SVC, um classificador baseado em SVM implementado na biblioteca sklearn, também disponível para Python.
+
+\section{\esp Bibliotecas utilizadas}
+O aplicativo foi feito utilizando-se de um script em Python. O mesmo requer as bibliotecas cv2, mahotas, matplotlib, numpy e sklearn, parte integrante do pacote scikit-learn. Sua interface gráfica utiliza as bibliotecas tkinter e PIL.
+
+Todas as bibliotecas são facilmente instaláveis pelo pip, o administrador de bibliotecas do Python.
+Comandos para instalar bibliotecas:
+
+\begin{itemize}
+	\item pip install mahotas.
+	\item pip install -U matplotlib.
+	\item pip install numpy.
+	\item pip install opencv-python.
+	\item pip install pil.
+	\item pip install -U scikit-learn.
+	\item pip install tkinter.
+\end{itemize}
+
+A biblioteca mahotas, requer Visual C++ 10, instalável via Visual Studio Build Tools -os recursos são "SDK do Windows 10" e "Ferramentas de build do MSVC".
+
+A biblioteca tkinter (tcl/tk) também pode ser instalada por padrão juntamente com a máquina virtual do Python ao selecionar uma caixa de seleção no instalador deste para incluí-la.
+
+
+\section{\esp Tempo de execução, descritores e hiperparâmetros do classificador}
+
+O tempo de execução do programa, do seu início até o final dos testes, é de aproximadamente 5.90 segundos.
+
+Foi calculado também, o tempo de execução do treino do classificador e o tempo de testes, o tempo de treino foi de aproximadamente 2.54 segundos para 75 imagens. Já a execução dos testes foi de aproximadamente 3.35 segundos, o teste começa com as 25 imagens que não foram usadas no treino e em seguida avalia a taxa de acerto para todas as 100 imagens.
+
+\begin{description}
+    \item[\textbf{Descritores:}]
+    
+        Neste projeto, foi usado o descritor de Haralick. Estes são recursos de textura que se obtem com base na matriz de coocorrência, a partir dele é possivel extrair características de texturas baseado na relação espacial existente entre os níveis de cinza da imagem.
+    
+    \item [\textbf{Hiperparâmetros do Classificador:}]
+    
+        Para os hiperparâmetros do classificador, temos duas listas, uma contendo os nomes dos arquivos de treinamento e a outra contendo as respectivas associações às classes do problema.
+    
+\end{description}
+
+\newpage
+\section{\esp Resultados obtidos nos testes}
+
+Após os testes e treinamento do classificador, obtivemos uma média de acerto de 23\%, levando em consideração as cem imagens. Para calcular este desempenho, o programa primeiro treina o classificador com setenta e cinco imagens (dezenove da classe um, dezoito da classe dois, três e quatro) e em seguida realiza um teste com as vinte e cinco imagens restantes. Após obter o resultado da classificação das cem imagens, o programa checa quais as reais classes de cada uma dessas figuras e assim calcula a porcentagem de acerto do classificador.
+
+A partir disso, é possível selecionar a imagem que deseja e obter de forma automática a classe da figura. Como previamente citado, a sensibilidade do classificador e a sua taxa de acerto fica em uma média de 23\%.
+
+
+
+\newpage
+
+\nocite {4309314}
+
+\nocite {haralickTexture}
+
+\nocite {mahotasClassification}
+
+\nocite {gogul}
+
+\nocite {scikitLearn}
